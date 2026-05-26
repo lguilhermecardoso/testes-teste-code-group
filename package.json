@@ -4,7 +4,8 @@
   "description": "Aplicação client-side para explorar perfis e repositórios do GitHub",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --dist-dir dist --public-url ./"
+    "build": "parcel build src/index.html --dist-dir dist --public-url ./",
+    "lint": "eslint src/js"
   },
   "keywords": [
     "github",
@@ -17,8 +18,10 @@
     "axios": "^1.6.7"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@parcel/transformer-inline-string": "^2.16.4",
     "buffer": "^6.0.3",
+    "eslint": "^10.4.0",
     "parcel": "^2.12.0"
   }
 }

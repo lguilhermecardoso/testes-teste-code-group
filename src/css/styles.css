@@ -192,6 +192,20 @@ body {
   border-color: var(--color-border);
 }
 
+/* ----- Skeleton Loading ----- */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #eaeef2 25%, #d8dde3 50%, #eaeef2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 4px;
+  display: block;
+}
+
 /* ----- Loading / Error ----- */
 .spinner-wrapper {
   display: flex;

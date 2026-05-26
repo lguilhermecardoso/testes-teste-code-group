@@ -1,6 +1,6 @@
 import html from 'bundle-text:./repository.html';
 import { createTemplate, clone } from '../components/template.js';
-import { fetchRepo } from '../api.js';
+import { fetchRepo, RateLimitError } from '../api.js';
 import { createSpinner } from '../components/spinner.js';
 import { createBackButton } from '../components/backButton.js';
 import { createErrorBox } from '../components/errorBox.js';
@@ -22,10 +22,13 @@ export async function renderRepository(app, { fullName }) {
       createBackButton(`#/user/${encodeURIComponent(repo.owner.login)}`, `Voltar para ${repo.owner.login}`)
     );
     app.appendChild(_buildDetail(repo));
-  } catch {
+  } catch (err) {
     app.innerHTML = '';
     app.appendChild(createBackButton('#/'));
-    app.appendChild(createErrorBox('Repositório não encontrado.'));
+    const msg = err instanceof RateLimitError
+      ? 'Limite de requisições da API do GitHub atingido. Tente novamente em alguns minutos.'
+      : 'Repositório não encontrado.';
+    app.appendChild(createErrorBox(msg));
   }
 }
 
