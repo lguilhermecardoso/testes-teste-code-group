@@ -7,6 +7,6 @@ const app = document.getElementById('app');
 
 on('/', () => renderHome(app));
 on('/user/:username', ({ username }) => renderUser(app, { username }));
-on('/repo/:fullName*', ({ fullName }) => renderRepository(app, { fullName }));
+on('/repo/:owner/:repo', ({ owner, repo }) => renderRepository(app, { fullName: `${owner}/${repo}` }));
 
 startRouter();

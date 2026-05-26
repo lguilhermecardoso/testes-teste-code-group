@@ -27,7 +27,7 @@ const template = createTemplate(html);
 export function createRepoCard(repo) {
   const el = clone(template);
 
-  el.href = `#/repo/${encodeURIComponent(repo.full_name)}`;
+  el.href = `#/repo/${repo.full_name}`;
   el.querySelector('.js-name').textContent = repo.name;
   el.querySelector('.js-stars').textContent = repo.stargazers_count.toLocaleString();
 
