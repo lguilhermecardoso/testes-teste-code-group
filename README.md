@@ -81,6 +81,14 @@ Cada componente segue a convenção de ter um arquivo `.html` com a estrutura e 
 | `#/user/:username` | Perfil do usuário |
 | `#/repo/:owner/:repo` | Detalhes do repositório |
 
+## Deploy (GitHub Pages)
+
+O projeto está configurado para deploy automático via GitHub Actions a cada push na branch `main`.
+
+Para ativar, acesse o repositório no GitHub → **Settings → Pages → Source** e selecione **GitHub Actions**.
+
+A URL pública ficará disponível em `https://<usuario>.github.io/<nome-do-repo>/`.
+
 ## Decisões técnicas
 
 **Paginação client-side:** a API do GitHub suporta paginação server-side (`per_page` + `page`), mas não oferece ordenação por número de estrelas. Por isso todos os repositórios são buscados de uma vez e a paginação é feita no cliente, garantindo que a ordenação por estrelas funcione corretamente sobre o conjunto completo.
