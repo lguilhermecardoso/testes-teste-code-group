@@ -2,6 +2,10 @@
 
 Aplicação client-side para buscar perfis e repositórios do GitHub.
 
+## Demo
+
+[https://lguilhermecardoso.github.io/testes-teste-code-group/](https://lguilhermecardoso.github.io/testes-teste-code-group/)
+
 ## Tecnologias
 
 - Vanilla JavaScript (ES6+)
@@ -88,6 +92,10 @@ O projeto está configurado para deploy automático via GitHub Actions a cada pu
 Para ativar, acesse o repositório no GitHub → **Settings → Pages → Source** e selecione **GitHub Actions**.
 
 A URL pública ficará disponível em `https://<usuario>.github.io/<nome-do-repo>/`.
+
+## Get in touch
+
+Guilherme Cardoso — [lguilhermecardoso.github.io/testes-teste-code-group](https://lguilhermecardoso.github.io/testes-teste-code-group/)
 
 ## Decisões técnicas
 
