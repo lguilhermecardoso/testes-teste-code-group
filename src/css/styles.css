@@ -160,9 +160,36 @@ body {
   flex-wrap: wrap;
 }
 
-.sort-controls .btn-sort {
+.btn-sort {
   font-size: 0.82rem;
   padding: 0.25rem 0.65rem;
+}
+
+/* ----- Pagination ----- */
+.pagination .page-link {
+  color: #24292f;
+  background-color: var(--color-card);
+  border-color: var(--color-border);
+  font-size: 0.82rem;
+  padding: 0.25rem 0.6rem;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--color-bg);
+  border-color: #adb5bd;
+  color: #24292f;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #adb5bd;
+  background-color: var(--color-card);
+  border-color: var(--color-border);
 }
 
 /* ----- Loading / Error ----- */
