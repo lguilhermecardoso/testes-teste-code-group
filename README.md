@@ -5,7 +5,7 @@ Aplicação client-side para buscar perfis e repositórios do GitHub.
 ## Tecnologias
 
 - Vanilla JavaScript (ES6+)
-- [Parcel](https://parceljs.org/) — bundler
+- [Parcel](https://parceljs.org/) — bundler com suporte a `bundle-text:` para importar templates HTML
 - [Axios](https://axios-http.com/) — requisições HTTP
 - [Bootstrap 5](https://getbootstrap.com/) — layout responsivo
 - Roteamento via Hash API (sem dependências externas)
@@ -15,9 +15,9 @@ Aplicação client-side para buscar perfis e repositórios do GitHub.
 - Busca de usuários do GitHub
 - Exibição de avatar, bio, e-mail, seguidores e seguindo
 - Listagem de repositórios ordenada por estrelas (padrão)
-- Ordenação por estrelas, nome ou data de atualização
-- Inversão da ordem (crescente/decrescente)
-- Página de detalhes de cada repositório com link externo
+- Ordenação por estrelas, nome ou data de atualização, com inversão de ordem
+- Paginação client-side com seletor de 5, 10 ou 20 repositórios por página
+- Página de detalhes de cada repositório (estrelas, forks, watchers, linguagem e link externo)
 
 ## Instalação e uso
 
@@ -49,18 +49,29 @@ src/
 ├── css/
 │   └── styles.css
 └── js/
-    ├── main.js          # entry point + registro de rotas
-    ├── router.js        # roteador hash-based
-    ├── api.js           # chamadas à API do GitHub (axios)
+    ├── main.js              # entry point + registro de rotas
+    ├── router.js            # roteador hash-based
+    ├── api.js               # chamadas à API do GitHub (axios)
+    ├── utils/
+    │   └── dom.js           # helper icon() para criar <i> via DOM
     ├── pages/
-    │   ├── home.js      # página de busca
-    │   ├── user.js      # perfil + listagem de repos
-    │   └── repository.js # detalhes de um repositório
+    │   ├── home.html        # template da página de busca
+    │   ├── home.js
+    │   ├── repository.html  # template da página de detalhes
+    │   └── repository.js
+    │   └── user.js          # perfil + listagem de repos
     └── components/
-        ├── userCard.js  # card de perfil do usuário
-        ├── repoList.js  # lista com controles de ordenação
-        └── spinner.js   # loading spinner
+        ├── template.js      # utilitário createTemplate / clone
+        ├── backButton.html + .js   # botão de voltar reutilizável
+        ├── errorBox.html + .js     # caixa de erro reutilizável
+        ├── spinner.html + .js      # loading spinner
+        ├── statBadge.html + .js    # badge de estatística
+        ├── userCard.html + .js     # card de perfil do usuário
+        ├── repoCard.html + .js     # card de repositório
+        └── repoList.js             # lista paginada com controles de ordenação
 ```
+
+Cada componente segue a convenção de ter um arquivo `.html` com a estrutura e um `.js` responsável apenas por preencher os dados via `querySelector('.js-*')`. Nenhuma marcação HTML está embutida nos arquivos JavaScript.
 
 ## Rotas
 
@@ -69,3 +80,7 @@ src/
 | `#/` | Busca |
 | `#/user/:username` | Perfil do usuário |
 | `#/repo/:owner/:repo` | Detalhes do repositório |
+
+## Decisões técnicas
+
+**Paginação client-side:** a API do GitHub suporta paginação server-side (`per_page` + `page`), mas não oferece ordenação por número de estrelas. Por isso todos os repositórios são buscados de uma vez e a paginação é feita no cliente, garantindo que a ordenação por estrelas funcione corretamente sobre o conjunto completo.

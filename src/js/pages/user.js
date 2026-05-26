@@ -2,10 +2,21 @@ import { fetchUser, fetchRepos } from '../api.js';
 import { createUserCard } from '../components/userCard.js';
 import { renderRepoList } from '../components/repoList.js';
 import { createSpinner } from '../components/spinner.js';
+import { createBackButton } from '../components/backButton.js';
+import { createErrorBox } from '../components/errorBox.js';
+
+function _notFoundMsg(username) {
+  const frag = document.createDocumentFragment();
+  frag.append('Usuário ');
+  const strong = document.createElement('strong');
+  strong.textContent = username;
+  frag.append(strong, ' não encontrado.');
+  return frag;
+}
 
 export async function renderUser(app, { username }) {
   app.innerHTML = '';
-  app.appendChild(_backButton('#/'));
+  app.appendChild(createBackButton('#/'));
   app.appendChild(createSpinner());
 
   try {
@@ -15,7 +26,7 @@ export async function renderUser(app, { username }) {
     ]);
 
     app.innerHTML = '';
-    app.appendChild(_backButton('#/'));
+    app.appendChild(createBackButton('#/'));
 
     const row = document.createElement('div');
     row.className = 'row g-4';
@@ -34,31 +45,11 @@ export async function renderUser(app, { username }) {
     renderRepoList(repos, colRepos);
   } catch (err) {
     const msg = err.response?.status === 404
-      ? `Usuário <strong>${username}</strong> não encontrado.`
+      ? _notFoundMsg(username)
       : 'Erro ao conectar com a API do GitHub. Tente novamente.';
 
     app.innerHTML = '';
-    app.appendChild(_backButton('#/'));
-    app.appendChild(_errorBox(msg));
+    app.appendChild(createBackButton('#/'));
+    app.appendChild(createErrorBox(msg));
   }
-}
-
-function _backButton(href) {
-  const wrap = document.createElement('div');
-  wrap.className = 'mb-3';
-
-  const a = document.createElement('a');
-  a.href = href;
-  a.className = 'btn btn-sm btn-outline-secondary';
-  a.innerHTML = '<i class="bi bi-arrow-left me-1"></i>Voltar';
-
-  wrap.appendChild(a);
-  return wrap;
-}
-
-function _errorBox(msg) {
-  const div = document.createElement('div');
-  div.className = 'error-box';
-  div.innerHTML = `<span class="icon">😕</span><p>${msg}</p>`;
-  return div;
 }

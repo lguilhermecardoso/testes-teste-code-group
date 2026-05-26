@@ -1,28 +1,12 @@
+import html from 'bundle-text:./home.html';
+import { createTemplate, clone } from '../components/template.js';
 import { navigate } from '../router.js';
 
+const template = createTemplate(html);
+
 export function renderHome(app) {
-  app.innerHTML = `
-    <div class="search-wrapper">
-      <h1>GitHub Explorer</h1>
-      <p>Busque um usuário para ver o perfil e os repositórios.</p>
-      <form id="search-form">
-        <div class="input-group">
-          <input
-            id="search-input"
-            type="text"
-            class="form-control form-control-lg"
-            placeholder="ex: torvalds"
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <button class="btn btn-dark btn-lg" type="submit">
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
-        <div id="search-error" class="text-danger mt-2 small" style="display:none"></div>
-      </form>
-    </div>
-  `;
+  app.innerHTML = '';
+  app.appendChild(clone(template));
 
   const form = app.querySelector('#search-form');
   const input = app.querySelector('#search-input');

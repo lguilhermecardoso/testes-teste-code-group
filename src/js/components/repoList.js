@@ -1,4 +1,5 @@
 import { createRepoCard } from './repoCard.js';
+import { icon } from '../utils/dom.js';
 
 const PAGE_SIZES = [5, 10, 20];
 
@@ -109,7 +110,7 @@ function _buildSortControls() {
   orderBtn.type = 'button';
   orderBtn.className = 'btn btn-sm btn-sort btn-outline-secondary';
   orderBtn.title = 'Inverter ordem';
-  orderBtn.innerHTML = `<i class="bi bi-arrow-${currentOrder === 'desc' ? 'down' : 'up'}"></i>`;
+  orderBtn.appendChild(icon(`bi-arrow-${currentOrder === 'desc' ? 'down' : 'up'}`));
   orderBtn.addEventListener('click', () => {
     currentOrder = currentOrder === 'desc' ? 'asc' : 'desc';
     currentPage = 1;
@@ -145,21 +146,24 @@ function _buildPagination() {
   const ul = document.createElement('ul');
   ul.className = 'pagination pagination-sm justify-content-center mb-0';
 
-  ul.appendChild(_pageItem('&laquo;', currentPage - 1, currentPage === 1));
+  ul.appendChild(_pageItem('«', currentPage - 1, currentPage === 1));
 
   const range = _pageRange(currentPage, totalPages);
   range.forEach(p => {
     if (p === '…') {
       const li = document.createElement('li');
       li.className = 'page-item disabled';
-      li.innerHTML = '<span class="page-link">…</span>';
+      const ellipsis = document.createElement('span');
+      ellipsis.className = 'page-link';
+      ellipsis.textContent = '…';
+      li.appendChild(ellipsis);
       ul.appendChild(li);
     } else {
       ul.appendChild(_pageItem(p, p, false, p === currentPage));
     }
   });
 
-  ul.appendChild(_pageItem('&raquo;', currentPage + 1, currentPage === totalPages));
+  ul.appendChild(_pageItem('»', currentPage + 1, currentPage === totalPages));
 
   nav.appendChild(ul);
   return nav;
@@ -171,7 +175,7 @@ function _pageItem(label, targetPage, disabled, active = false) {
 
   const btn = document.createElement(disabled ? 'span' : 'button');
   btn.className = 'page-link';
-  btn.innerHTML = label;
+  btn.textContent = label;
 
   if (!disabled && !active) {
     btn.type = 'button';
